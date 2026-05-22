@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FrankRi — Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg:       #0a0c10;
+    --bg2:      #0f1218;
+    --bg3:      #161b24;
+    --card:     #12161e;
+    --border:   #1e2530;
+    --accent:   #00e5c0;
+    --accent2:  #5b6ef8;
+    --text:     #e8eaf0;
+    --muted:    #6b7280;
+    --muted2:   #8b95a3;
+    --white:    #f5f7ff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 64px;
+    background: rgba(10,12,16,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted2);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ─── HERO ────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 120px 5vw 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image:
+      linear-gradient(var(--accent) 1px, transparent 1px),
+      linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    top: -100px; right: -100px;
+    background: radial-gradient(circle, rgba(0,229,192,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    bottom: 0; left: 10%;
+    background: radial-gradient(circle, rgba(91,110,248,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(0,229,192,0.08);
+    border: 1px solid rgba(0,229,192,0.2);
+    padding: 6px 14px; border-radius: 100px;
+    margin-bottom: 2rem;
+    width: fit-content;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    color: var(--muted2);
+    letter-spacing: 0.02em;
+    max-width: 600px;
+    margin: 1.5rem 0 2.5rem;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 500;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer; border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0c10;
+  }
+  .btn-primary:hover { background: #00ffda; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+  .hero-stats {
+    display: flex; gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem; font-weight: 800;
+    color: var(--white);
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTIONS ────────────────────────────── */
+  section { padding: 100px 5vw; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: var(--muted2);
+    max-width: 560px;
+    margin-bottom: 3.5rem;
+    font-size: 1rem;
+  }
+
+  /* ─── ABOUT ───────────────────────────────── */
+  #about { background: var(--bg2); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .about-text p { color: var(--muted2); margin-bottom: 1.2rem; line-height: 1.8; }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+  .about-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .about-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: border-color 0.2s;
+  }
+  .about-card:hover { border-color: var(--accent); }
+  .about-card:nth-child(2) { margin-top: 1.5rem; }
+  .about-card:nth-child(4) { margin-top: 1.5rem; }
+  .about-card-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(0,229,192,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; margin-bottom: 0.75rem;
+  }
+  .about-card h4 { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem; }
+  .about-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+  /* ─── SKILLS ──────────────────────────────── */
+  #skills { background: var(--bg); }
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .skill-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted2);
+    transition: all 0.2s;
+  }
+  .skill-chip:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,192,0.05); }
+  .skill-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.6; }
+  .skill-chip.accent { border-color: rgba(0,229,192,0.3); color: var(--accent); background: rgba(0,229,192,0.06); }
+  .skill-chip.accent2 { border-color: rgba(91,110,248,0.3); color: #8b99ff; background: rgba(91,110,248,0.06); }
+  .skill-chip .dot2 { background: #8b99ff; }
+
+  /* ─── PROJECTS ────────────────────────────── */
+  #projects { background: var(--bg2); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0,229,192,0.3);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  }
+  .project-card.featured {
+    grid-column: span 2;
+  }
+  .project-preview {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card.featured .project-preview { height: 260px; }
+
+  /* ── mock preview backgrounds ── */
+  .preview-taskmaster {
+    background: #0f172a;
+    display: flex; flex-direction: column;
+    padding: 20px;
+    gap: 8px;
+  }
+  .task-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .task-header-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: #e2e8f0; }
+  .task-add-btn { background: #00e5c0; color: #0a0c10; font-size: 0.65rem; padding: 4px 10px; border-radius: 6px; font-weight: 600; }
+  .task-item {
+    background: #1e293b;
+    border: 1px solid #2d3a4a;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .task-check { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #475569; flex-shrink: 0; }
+  .task-check.done { background: #00e5c0; border-color: #00e5c0; }
+  .task-text { font-size: 0.72rem; color: #94a3b8; flex: 1; }
+  .task-text.done { text-decoration: line-through; opacity: 0.5; }
+  .task-badge { font-size: 0.58rem; padding: 2px 7px; border-radius: 100px; }
+  .task-badge.work { background: rgba(91,110,248,0.2); color: #8b99ff; }
+  .task-badge.personal { background: rgba(0,229,192,0.15); color: #00e5c0; }
+
+  .preview-rpg {
+    background: #0d0d0d;
+    padding: 20px;
+    font-family: 'DM Mono', monospace;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .rpg-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .rpg-title { font-size: 0.9rem; color: #ffd700; font-weight: 500; letter-spacing: 0.1em; }
+  .rpg-stats { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .rpg-stat { font-size: 0.6rem; color: #888; }
+  .rpg-stat span { color: #e74c3c; }
+  .rpg-text { font-size: 0.65rem; color: #a0a0a0; line-height: 1.6; margin: 4px 0; }
+  .rpg-text em { color: #ffd700; font-style: normal; }
+  .rpg-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .rpg-btn { font-size: 0.6rem; padding: 4px 10px; border-radius: 4px; border: 1px solid #333; color: #ccc; background: #111; }
+  .rpg-btn.active { border-color: #ffd700; color: #ffd700; }
+  .rpg-bar { height: 6px; border-radius: 3px; background: #1a1a1a; overflow: hidden; }
+  .rpg-bar-fill { height: 100%; border-radius: 3px; }
+
+  .preview-cafe {
+    background: #fdf6ee;
+    padding: 20px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .cafe-logo { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: #2c1810; text-align: center; letter-spacing: 0.15em; text-transform: uppercase; }
+  .cafe-logo span { color: #c0843f; }
+  .cafe-divider { border: none; border-top: 1px solid #e0c9a6; }
+  .cafe-section-title { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: #9b8060; text-transform: uppercase; letter-spacing: 0.1em; text-align: center; }
+  .cafe-items { display: flex; flex-direction: column; gap: 6px; }
+  .cafe-item { display: flex; justify-content: space-between; align-items: baseline; }
+  .cafe-item-name { font-size: 0.72rem; color: #2c1810; font-weight: 500; }
+  .cafe-item-dots { flex: 1; border-bottom: 1px dotted #c0a882; margin: 0 8px; position: relative; top: -2px; }
+  .cafe-item-price { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: #c0843f; }
+
+  .preview-skyline {
+    background: linear-gradient(to bottom, #0a0028 0%, #1a0a4a 50%, #2d1060 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .sky-stars { position: absolute; inset: 0; }
+  .star { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #fff; opacity: 0.6; }
+  .skyline-buildings { position: absolute; bottom: 0; left: 0; right: 0; display: flex; align-items: flex-end; justify-content: center; gap: 3px; padding: 0 10px; }
+  .building { background: #1a1440; position: relative; }
+  .building::after { content: ''; position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 2px; height: 2px; background: #ff4040; border-radius: 50%; animation: blink 1.5s infinite; }
+  @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.2} }
+  .windows { position: absolute; inset: 8px 4px 4px; display: grid; gap: 2px; }
+  .win { background: rgba(255,220,50,0.15); border-radius: 1px; }
+  .win.lit { background: rgba(255,220,50,0.7); }
+  .moon { position: absolute; top: 15px; right: 20px; width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff5c0, #f0d060); opacity: 0.9; }
+
+  .preview-magazine {
+    background: #f8f5f0;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .mag-main { grid-column: span 2; }
+  .mag-hero-img { height: 70px; background: linear-gradient(135deg, #8b0000, #c0392b); border-radius: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; }
+  .mag-hero-label { font-size: 0.55rem; color: rgba(255,255,255,0.6); letter-spacing: 0.15em; text-transform: uppercase; }
+  .mag-hero-title { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700; color: #2c2c2c; line-height: 1.3; }
+  .mag-hero-byline { font-size: 0.55rem; color: #888; margin-top: 3px; }
+  .mag-card { background: #fff; border-radius: 6px; padding: 8px; }
+  .mag-card-img { height: 44px; border-radius: 4px; background: #e8e0d8; margin-bottom: 6px; }
+  .mag-card-tag { font-size: 0.52rem; color: #c0392b; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+  .mag-card-title { font-family: 'Syne', sans-serif; font-size: 0.6rem; font-weight: 700; color: #2c2c2c; line-height: 1.3; margin-top: 2px; }
+
+  .preview-penguin {
+    background: #e8f4f8;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .penguin-body { width: 80px; position: relative; }
+  .p-body { width: 80px; height: 110px; background: #1a1a1a; border-radius: 40px 40px 35px 35px; margin: 0 auto; position: relative; }
+  .p-belly { width: 52px; height: 80px; background: #f5f5f0; border-radius: 26px 26px 22px 22px; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); }
+  .p-eyes { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); display: flex; gap: 16px; }
+  .p-eye { width: 10px; height: 10px; background: #fff; border-radius: 50%; position: relative; }
+  .p-eye::after { content: ''; position: absolute; width: 5px; height: 5px; background: #1a1a1a; border-radius: 50%; top: 2px; left: 2px; }
+  .p-beak { width: 18px; height: 10px; background: #ff9500; border-radius: 0 0 9px 9px; position: absolute; top: 36px; left: 50%; transform: translateX(-50%); }
+  .p-wing { width: 22px; height: 60px; background: #1a1a1a; border-radius: 11px 6px 11px 6px; position: absolute; top: 28px; }
+  .p-wing.left { left: -18px; transform: rotate(-15deg); }
+  .p-wing.right { right: -18px; transform: rotate(15deg); }
+  .p-feet { display: flex; justify-content: center; gap: 10px; margin-top: 3px; }
+  .p-foot { width: 22px; height: 10px; background: #ff9500; border-radius: 5px; }
+  .p-scarf { width: 78px; height: 14px; background: #e74c3c; border-radius: 7px; position: absolute; top: 50px; left: 50%; transform: translateX(-50%); }
+  .p-scarf::after { content: ''; position: absolute; right: -8px; top: 2px; width: 10px; height: 20px; background: #e74c3c; border-radius: 0 0 5px 5px; }
+
+  /* ─── PROJECT BODY ────────────────────────── */
+  .project-body { padding: 1.5rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+  .project-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.06em;
+    padding: 3px 8px; border-radius: 4px;
+    color: var(--muted2); background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  }
+  .project-tag.ts { color: #3b82f6; background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.2); }
+  .project-tag.js { color: #fbbf24; background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.2); }
+  .project-tag.react { color: #38bdf8; background: rgba(56,189,248,0.08); border-color: rgba(56,189,248,0.2); }
+  .project-tag.css { color: #a78bfa; background: rgba(167,139,250,0.08); border-color: rgba(167,139,250,0.2); }
+  .project-tag.html { color: #f97316; background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.2); }
+  .project-tag.supabase { color: #3ecf8e; background: rgba(62,207,142,0.08); border-color: rgba(62,207,142,0.2); }
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--white); margin-bottom: 0.5rem;
+  }
+  .project-desc { font-size: 0.88rem; color: var(--muted2); line-height: 1.7; margin-bottom: 1.25rem; }
+  .project-links { display: flex; gap: 0.75rem; }
+  .project-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.04em;
+    padding: 6px 12px; border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .project-link.primary { background: var(--accent); color: #0a0c10; font-weight: 500; }
+  .project-link.primary:hover { background: #00ffda; }
+  .project-link.ghost { color: var(--muted2); border: 1px solid var(--border); }
+  .project-link.ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .project-link svg { width: 12px; height: 12px; }
+
+  /* ─── CONTACT ─────────────────────────────── */
+  #contact {
+    background: var(--bg);
+    text-align: center;
+  }
+  .contact-card {
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,229,192,0.07) 0%, transparent 60%);
+  }
+  .contact-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem; font-weight: 800;
+    color: var(--white); margin-bottom: 0.75rem;
+  }
+  .contact-card p { color: var(--muted2); margin-bottom: 2rem; }
+  .contact-info { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem; color: var(--muted2);
+    text-decoration: none;
+    justify-content: center;
+    transition: color 0.2s;
+  }
+  .contact-item:hover { color: var(--accent); }
+  .contact-item svg { width: 16px; height: 16px; opacity: 0.7; }
+
+  /* ─── FOOTER ──────────────────────────────── */
+  footer {
+    padding: 2rem 5vw;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer p { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+  footer .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--accent); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ─── SCROLL REVEAL ───────────────────────── */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── RESPONSIVE ──────────────────────────── */
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .project-card.featured { grid-column: span 1; }
+    .hero-stats { gap: 2rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    .contact-card { padding: 2rem 1.5rem; }
+    .about-visual { grid-template-columns: 1fr; }
+    .about-card:nth-child(2), .about-card:nth-child(4) { margin-top: 0; }
+  }
+
+  /* ─── MARQUEE ─────────────────────────────── */
+  .marquee-section { padding: 0; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg3); }
+  .marquee-track { display: flex; gap: 3rem; padding: 1.2rem 0; animation: marquee 22s linear infinite; width: max-content; }
+  .marquee-track span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .marquee-track span.dot { color: var(--accent); opacity: 0.6; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">FR/</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:frankr74@gmail.com" class="btn btn-primary" style="padding:8px 18px;font-size:0.82rem;">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-tag">Available for opportunities</div>
+  <h1>Frank<br><span>Ri.</span></h1>
+  <p class="hero-subtitle">// Frontend-focused full stack developer building clean, functional web experiences with HTML, CSS, JavaScript, TypeScript & React.</p>
+  <div class="hero-actions">
+    <a href="#projects" class="btn btn-primary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/></svg>
+      View Projects
+    </a>
+    <a href="https://github.com/FRJ74" target="_blank" class="btn btn-outline">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>
+    <a href="https://frj74.github.io/TaskMaster/" target="_blank" class="btn btn-outline">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/><path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/></svg>
+      Live Demo
+    </a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">59<span>+</span></div>
+      <div class="stat-label">Repositories</div>
+    </div>
+    <div>
+      <div class="stat-num">6<span>+</span></div>
+      <div class="stat-label">Pinned Projects</div>
+    </div>
+    <div>
+      <div class="stat-num">4<span>+</span></div>
+      <div class="stat-label">Languages</div>
+    </div>
+    <div>
+      <div class="stat-num">1<span>×</span></div>
+      <div class="stat-label">Arctic Vault Contributor</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span>HTML5</span><span class="dot">◆</span>
+    <span>CSS3</span><span class="dot">◆</span>
+    <span>JavaScript</span><span class="dot">◆</span>
+    <span>TypeScript</span><span class="dot">◆</span>
+    <span>React</span><span class="dot">◆</span>
+    <span>Tailwind CSS</span><span class="dot">◆</span>
+    <span>Supabase</span><span class="dot">◆</span>
+    <span>Git / GitHub</span><span class="dot">◆</span>
+    <span>Linux</span><span class="dot">◆</span>
+    <span>Vite</span><span class="dot">◆</span>
+    <span>Node.js</span><span class="dot">◆</span>
+    <span>Responsive Design</span><span class="dot">◆</span>
+    <!-- duplicate for seamless loop -->
+    <span>HTML5</span><span class="dot">◆</span>
+    <span>CSS3</span><span class="dot">◆</span>
+    <span>JavaScript</span><span class="dot">◆</span>
+    <span>TypeScript</span><span class="dot">◆</span>
+    <span>React</span><span class="dot">◆</span>
+    <span>Tailwind CSS</span><span class="dot">◆</span>
+    <span>Supabase</span><span class="dot">◆</span>
+    <span>Git / GitHub</span><span class="dot">◆</span>
+    <span>Linux</span><span class="dot">◆</span>
+    <span>Vite</span><span class="dot">◆</span>
+    <span>Node.js</span><span class="dot">◆</span>
+    <span>Responsive Design</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">Building the web,<br>one commit at a time.</h2>
+      <p>I'm <strong>FrankRi</strong>, a self-driven frontend developer on a mission to master the full web stack. I've built a strong foundation in <strong>HTML, CSS and JavaScript</strong>, and I'm actively advancing into <strong>React, TypeScript, PHP, Python, and MySQL</strong>.</p>
+      <p>My learning path runs through <strong>The Odin Project, Scrimba, freeCodeCamp, and MDN Web Docs</strong> — rigorous, project-first learning that translates directly into real code. I love collaborating on web-based projects and am always looking for the next challenge.</p>
+      <p>I'm also a proud <strong>GitHub Arctic Code Vault Contributor</strong>, which means my code is preserved for future generations. Not a bad legacy.</p>
+      <a href="mailto:frankr74@gmail.com" class="btn btn-outline" style="margin-top:0.5rem;">Get in touch →</a>
+    </div>
+    <div class="about-visual reveal reveal-delay-2">
+      <div class="about-card">
+        <div class="about-card-icon">🎯</div>
+        <h4>Goal-Oriented</h4>
+        <p>Working toward full stack proficiency through structured, project-based learning.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">⚡</div>
+        <h4>Fast Learner</h4>
+        <p>From zero to TypeScript + Supabase apps in a short learning window.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🤝</div>
+        <h4>Collaborative</h4>
+        <p>Open to collaborating on web projects — let's build something great together.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🐧</div>
+        <h4>Linux Proficient</h4>
+        <p>Comfortable in Ubuntu and CentOS environments for development workflows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal">
+    <p class="section-label">Tech Stack</p>
+    <h2 class="section-title">Skills & Tools</h2>
+    <p class="section-sub">The technologies I use to design, build, and ship web experiences.</p>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:2rem;">
+    <div class="reveal reveal-delay-1">
+      <p style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;">Frontend</p>
+      <div class="skills-grid">
+        <div class="skill-chip accent"><span class="dot"></span>HTML5</div>
+        <div class="skill-chip accent"><span class="dot"></span>CSS3</div>
+        <div class="skill-chip accent"><span class="dot"></span>JavaScript ES6+</div>
+        <div class="skill-chip accent"><span class="dot"></span>TypeScript</div>
+        <div class="skill-chip accent"><span class="dot"></span>React</div>
+        <div class="skill-chip accent"><span class="dot"></span>Tailwind CSS</div>
+        <div class="skill-chip accent"><span class="dot"></span>Responsive Design</div>
+        <div class="skill-chip accent"><span class="dot"></span>CSS Animations</div>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <p style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;">Backend & Data</p>
+      <div class="skills-grid">
+        <div class="skill-chip accent2"><span class="dot dot2"></span>Supabase</div>
+        <div class="skill-chip accent2"><span class="dot dot2"></span>PostgreSQL / PLpgSQL</div>
+        <div class="skill-chip accent2"><span class="dot dot2"></span>Node.js (learning)</div>
+        <div class="skill-chip accent2"><span class="dot dot2"></span>PHP (learning)</div>
+        <div class="skill-chip accent2"><span class="dot dot2"></span>Python (learning)</div>
+        <div class="skill-chip accent2"><span class="dot dot2"></span>MySQL (learning)</div>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-3">
+      <p style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem;">Tooling & Environment</p>
+      <div class="skills-grid">
+        <div class="skill-chip"><span class="dot" style="background:var(--muted)"></span>Git</div>
+        <div class="skill-chip"><span class="dot" style="background:var(--muted)"></span>GitHub</div>
+        <div class="skill-chip"><span class="dot" style="background:var(--muted)"></span>Vite</div>
+        <div class="skill-chip"><span class="dot" style="background:var(--muted)"></span>Linux (Ubuntu, CentOS)</div>
+        <div class="skill-chip"><span class="dot" style="background:var(--muted)"></span>GitHub Pages</div>
+        <div class="skill-chip"><span class="dot" style="background:var(--muted)"></span>GitHub Actions</div>
+        <div class="skill-chip"><span class="dot" style="background:var(--muted)"></span>ESLint</div>
+        <div class="skill-chip"><span class="dot" style="background:var(--muted)"></span>npm</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <p class="section-label">Work</p>
+    <h2 class="section-title">Featured Projects</h2>
+    <p class="section-sub">A selection of projects demonstrating growth from CSS art to full-stack applications.</p>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- TaskMaster (featured) -->
+    <div class="project-card featured reveal">
+      <div class="project-preview preview-taskmaster">
+        <div class="task-header">
+          <span class="task-header-title">TaskMaster</span>
+          <span class="task-add-btn">+ Add Task</span>
+        </div>
+        <div class="task-item">
+          <div class="task-check done"></div>
+          <span class="task-text done">Complete project documentation</span>
+          <span class="task-badge work">Work</span>
+        </div>
+        <div class="task-item">
+          <div class="task-check"></div>
+          <span class="task-text">Build new React component</span>
+          <span class="task-badge work">Work</span>
+        </div>
+        <div class="task-item">
+          <div class="task-check"></div>
+          <span class="task-text">Review pull request for auth feature</span>
+          <span class="task-badge personal">Dev</span>
+        </div>
+        <div class="task-item">
+          <div class="task-check done"></div>
+          <span class="task-text done">Deploy to GitHub Pages</span>
+          <span class="task-badge personal">Personal</span>
+        </div>
+        <div class="task-item">
+          <div class="task-check"></div>
+          <span class="task-text">Set up Supabase row-level security</span>
+          <span class="task-badge work">DB</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag react">React</span>
+          <span class="project-tag ts">TypeScript</span>
+          <span class="project-tag">Tailwind CSS</span>
+          <span class="project-tag supabase">Supabase</span>
+          <span class="project-tag">Vite</span>
+          <span class="project-tag">GitHub Actions</span>
+        </div>
+        <h3 class="project-title">TaskMaster — Smart To-Do App</h3>
+        <p class="project-desc">A full-featured productivity application built with React and TypeScript, backed by a Supabase PostgreSQL database with real-time sync. Features create/edit/delete tasks, completion tracking, categorized views, and a responsive layout deployable to GitHub Pages via CI/CD. Demonstrates modern full-stack patterns including RLS policies and database migrations.</p>
+        <div class="project-links">
+          <a href="https://frj74.github.io/TaskMaster/" target="_blank" class="project-link primary">
+            Live Demo
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+          </a>
+          <a href="https://github.com/FRJ74/TaskMaster" target="_blank" class="project-link ghost">
+            GitHub
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role Playing Game -->
+    <div class="project-card reveal reveal-delay-1">
+      <div class="project-preview preview-rpg">
+        <div class="rpg-top">
+          <span class="rpg-title">⚔ Dragon's Keep</span>
+          <div class="rpg-stats">
+            <span class="rpg-stat">HP: <span>45/100</span></span>
+            <span class="rpg-stat">XP: 380 | Lvl 4</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;margin:4px 0">
+          <div style="flex:1"><div class="rpg-bar"><div class="rpg-bar-fill" style="width:45%;background:#e74c3c"></div></div></div>
+          <div style="flex:1"><div class="rpg-bar"><div class="rpg-bar-fill" style="width:70%;background:#f39c12"></div></div></div>
+        </div>
+        <p class="rpg-text">You enter the <em>Dark Forest</em>. A growling sound echoes from the shadows ahead. You grip your sword tightly...</p>
+        <p class="rpg-text">A <em>Cave Dragon</em> blocks your path! It has 120 HP and a fire breath attack.</p>
+        <div class="rpg-actions">
+          <div class="rpg-btn active">⚔ Attack</div>
+          <div class="rpg-btn">🪄 Magic</div>
+          <div class="rpg-btn">🏃 Flee</div>
+          <div class="rpg-btn">🧪 Potion</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag js">JavaScript</span>
+          <span class="project-tag html">HTML5</span>
+          <span class="project-tag css">CSS3</span>
+        </div>
+        <h3 class="project-title">Role Playing Game</h3>
+        <p class="project-desc">An interactive text-based RPG built from scratch in vanilla JavaScript. Covers core programming concepts: arrays, objects, functions, loops, and event-driven logic. Players navigate a fantasy world, battle monsters, manage health/XP, and level up their character — a 88-commit journey into DOM manipulation and game state management.</p>
+        <div class="project-links">
+          <a href="https://github.com/FRJ74/RolePlayingGame" target="_blank" class="project-link primary">View on GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Café Menu -->
+    <div class="project-card reveal reveal-delay-2">
+      <div class="project-preview preview-cafe">
+        <div class="cafe-logo">Café <span>Mocha</span></div>
+        <hr class="cafe-divider">
+        <div class="cafe-section-title">☕ Coffee &amp; Espresso</div>
+        <div class="cafe-items">
+          <div class="cafe-item"><span class="cafe-item-name">Flat White</span><div class="cafe-item-dots"></div><span class="cafe-item-price">$4.50</span></div>
+          <div class="cafe-item"><span class="cafe-item-name">Cold Brew</span><div class="cafe-item-dots"></div><span class="cafe-item-price">$5.00</span></div>
+          <div class="cafe-item"><span class="cafe-item-name">Caramel Macchiato</span><div class="cafe-item-dots"></div><span class="cafe-item-price">$5.25</span></div>
+        </div>
+        <hr class="cafe-divider" style="margin-top:6px">
+        <div class="cafe-section-title">🥐 Pastries</div>
+        <div class="cafe-items">
+          <div class="cafe-item"><span class="cafe-item-name">Almond Croissant</span><div class="cafe-item-dots"></div><span class="cafe-item-price">$3.75</span></div>
+          <div class="cafe-item"><span class="cafe-item-name">Blueberry Muffin</span><div class="cafe-item-dots"></div><span class="cafe-item-price">$2.50</span></div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag html">HTML5</span>
+          <span class="project-tag css">CSS3</span>
+        </div>
+        <h3 class="project-title">Café Menu</h3>
+        <p class="project-desc">A beautifully styled café menu demonstrating semantic HTML structure paired with refined CSS typography, layout hierarchy, and visual rhythm. Covers CSS selectors, box model, spacing, and typographic scale — elegant front-end fundamentals executed with a real-world design context.</p>
+        <div class="project-links">
+          <a href="https://github.com/FRJ74/cafemenu" target="_blank" class="project-link primary">View on GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- City Skyline -->
+    <div class="project-card reveal reveal-delay-1">
+      <div class="project-preview preview-skyline">
+        <div class="sky-stars">
+          <div class="star" style="top:10%;left:15%"></div>
+          <div class="star" style="top:20%;left:30%"></div>
+          <div class="star" style="top:8%;left:55%"></div>
+          <div class="star" style="top:15%;left:70%"></div>
+          <div class="star" style="top:25%;left:85%"></div>
+          <div class="star" style="top:5%;left:42%"></div>
+          <div class="star" style="top:30%;left:10%"></div>
+        </div>
+        <div class="moon"></div>
+        <div class="skyline-buildings">
+          <div class="building" style="width:28px;height:60px">
+            <div class="windows" style="grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,1fr)">
+              <div class="win lit"></div><div class="win"></div>
+              <div class="win"></div><div class="win lit"></div>
+              <div class="win lit"></div><div class="win lit"></div>
+              <div class="win"></div><div class="win"></div>
+            </div>
+          </div>
+          <div class="building" style="width:20px;height:40px">
+            <div class="windows" style="grid-template-columns:1fr;grid-template-rows:repeat(3,1fr)">
+              <div class="win lit"></div><div class="win"></div><div class="win lit"></div>
+            </div>
+          </div>
+          <div class="building" style="width:36px;height:90px">
+            <div class="windows" style="grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(6,1fr)">
+              <div class="win lit"></div><div class="win"></div><div class="win lit"></div>
+              <div class="win"></div><div class="win lit"></div><div class="win"></div>
+              <div class="win lit"></div><div class="win lit"></div><div class="win"></div>
+              <div class="win"></div><div class="win"></div><div class="win lit"></div>
+              <div class="win lit"></div><div class="win"></div><div class="win lit"></div>
+              <div class="win"></div><div class="win lit"></div><div class="win"></div>
+            </div>
+          </div>
+          <div class="building" style="width:24px;height:70px">
+            <div class="windows" style="grid-template-columns:1fr 1fr;grid-template-rows:repeat(5,1fr)">
+              <div class="win"></div><div class="win lit"></div>
+              <div class="win lit"></div><div class="win"></div>
+              <div class="win"></div><div class="win lit"></div>
+              <div class="win lit"></div><div class="win lit"></div>
+              <div class="win"></div><div class="win"></div>
+            </div>
+          </div>
+          <div class="building" style="width:30px;height:55px">
+            <div class="windows" style="grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,1fr)">
+              <div class="win lit"></div><div class="win"></div>
+              <div class="win"></div><div class="win lit"></div>
+              <div class="win lit"></div><div class="win"></div>
+              <div class="win"></div><div class="win lit"></div>
+            </div>
+          </div>
+          <div class="building" style="width:18px;height:45px">
+            <div class="windows" style="grid-template-columns:1fr;grid-template-rows:repeat(4,1fr)">
+              <div class="win"></div><div class="win lit"></div><div class="win lit"></div><div class="win"></div>
+            </div>
+          </div>
+          <div class="building" style="width:32px;height:80px">
+            <div class="windows" style="grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(5,1fr)">
+              <div class="win"></div><div class="win lit"></div><div class="win"></div>
+              <div class="win lit"></div><div class="win"></div><div class="win lit"></div>
+              <div class="win"></div><div class="win lit"></div><div class="win"></div>
+              <div class="win lit"></div><div class="win lit"></div><div class="win"></div>
+              <div class="win"></div><div class="win"></div><div class="win lit"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag css">CSS3</span>
+          <span class="project-tag html">HTML5</span>
+        </div>
+        <h3 class="project-title">City Skyline</h3>
+        <p class="project-desc">A CSS art project that renders a detailed night-time city skyline entirely in code — no images, no canvas, just HTML and CSS. Demonstrates mastery of CSS variables, gradients, box model composition, pseudo-elements, and pixel-perfect positioning to create a visually stunning, fully responsive illustration.</p>
+        <div class="project-links">
+          <a href="https://github.com/FRJ74/CitySkyline" target="_blank" class="project-link primary">View on GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Online Magazine -->
+    <div class="project-card reveal reveal-delay-2">
+      <div class="project-preview preview-magazine">
+        <div class="mag-main">
+          <div class="mag-hero-img"><span style="font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:800;letter-spacing:0.2em;color:rgba(255,255,255,0.9)">THE ONLINE MAGAZINE</span></div>
+          <p class="mag-hero-label">Featured Story</p>
+          <p class="mag-hero-title">The Future of Web Design: What Comes After Flat UI?</p>
+          <p class="mag-hero-byline">By F. Rodriguez · May 2026</p>
+        </div>
+        <div class="mag-card">
+          <div class="mag-card-img" style="background:#c8e6c9"></div>
+          <span class="mag-card-tag">Tech</span>
+          <p class="mag-card-title">How CSS Grid Changed Everything</p>
+        </div>
+        <div class="mag-card">
+          <div class="mag-card-img" style="background:#ffe0b2"></div>
+          <span class="mag-card-tag">Design</span>
+          <p class="mag-card-title">Typography as Brand Identity</p>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag html">HTML5</span>
+          <span class="project-tag css">CSS3</span>
+        </div>
+        <h3 class="project-title">Online Magazine</h3>
+        <p class="project-desc">An editorial layout project replicating the structure and visual hierarchy of a professional online magazine. Explores CSS Grid and Flexbox for multi-column layouts, typographic rhythm, content cards, hero sections, and responsive breakpoints — bringing editorial design principles into the browser with pure HTML and CSS.</p>
+        <div class="project-links">
+          <a href="https://github.com/FRJ74/OnlineMagazine" target="_blank" class="project-link primary">View on GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Penguin -->
+    <div class="project-card reveal reveal-delay-3">
+      <div class="project-preview preview-penguin">
+        <div class="penguin-body">
+          <div style="position:relative">
+            <div class="p-wing left"></div>
+            <div class="p-wing right"></div>
+            <div class="p-body">
+              <div class="p-belly"></div>
+              <div class="p-eyes">
+                <div class="p-eye"></div>
+                <div class="p-eye"></div>
+              </div>
+              <div class="p-beak"></div>
+              <div class="p-scarf"></div>
+            </div>
+          </div>
+          <div class="p-feet">
+            <div class="p-foot"></div>
+            <div class="p-foot"></div>
+          </div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag css">CSS3</span>
+          <span class="project-tag html">HTML5</span>
+        </div>
+        <h3 class="project-title">Penguin</h3>
+        <p class="project-desc">A delightful CSS illustration of an adorable penguin, built without a single image file. This project pushes CSS styling to its creative limits — demonstrating border-radius mastery, layered positioning, transform usage, and color composition to craft a charming character entirely from styled HTML elements.</p>
+        <div class="project-links">
+          <a href="https://github.com/FRJ74/Penguin" target="_blank" class="project-link primary">View on GitHub</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <p class="section-label">Let's Talk</p>
+    <h2 class="section-title">Open to Opportunities</h2>
+    <p class="section-sub">Whether it's a collaboration, a project, or just a conversation about web dev — I'm always happy to connect.</p>
+  </div>
+  <div class="contact-card reveal reveal-delay-1">
+    <h3>Get in touch</h3>
+    <p>Drop me an email or connect on GitHub. I respond to everything.</p>
+    <a href="mailto:frankr74@gmail.com" class="btn btn-primary" style="font-size:0.95rem;padding:14px 28px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/></svg>
+      frankr74@gmail.com
+    </a>
+    <div class="contact-info">
+      <a href="https://github.com/FRJ74" target="_blank" class="contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        github.com/FRJ74
+      </a>
+      <a href="https://frj74.github.io/TaskMaster/" target="_blank" class="contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/><path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/></svg>
+        frj74.github.io/TaskMaster
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">FR/</span>
+  <p>© 2026 FrankRi. Built with HTML, CSS & JS.</p>
+  <div class="footer-links">
+    <a href="https://github.com/FRJ74" target="_blank">GitHub</a>
+    <a href="mailto:frankr74@gmail.com">Email</a>
+    <a href="#home">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
